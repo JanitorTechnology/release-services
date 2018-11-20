@@ -23,10 +23,10 @@ RUN echo "build-users-group = nixbld" >> /etc/nix/nix.conf \
  && mkdir -m 1777 -p /nix/var/nix/gcroots/per-user
 
 USER gitpod
-RUN sudo echo "build-use-sandbox = true" >> /etc/nix/nix.conf \
+RUN echo "build-use-sandbox = true" | sudo tee -a /etc/nix/nix.conf \
  && sudo mkdir -p /nix/var/nix/profiles \
  && sudo /home/$USER/.nix-profile/bin/nix-env -iA nixpkgs.bash -p /nix/var/nix/profiles/sandbox \
- && sudo echo "build-sandbox-paths = /bin/sh=`realpath /nix/var/nix/profiles/sandbox/bin/bash` `nix-store -qR \`realpath /nix/var/nix/profiles/sandbox/bin/bash\` | tr '\n' ' '`" >> /etc/nix/nix.conf
+ && echo "build-sandbox-paths = /bin/sh=`realpath /nix/var/nix/profiles/sandbox/bin/bash` `nix-store -qR \`realpath /nix/var/nix/profiles/sandbox/bin/bash\` | tr '\n' ' '`" | sudo tee -a /etc/nix/nix.conf
 
 # Give back control
 USER root
