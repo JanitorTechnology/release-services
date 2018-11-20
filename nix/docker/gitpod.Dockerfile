@@ -5,6 +5,7 @@ USER root
 # Set up Nix. Source: https://docs.mozilla-releng.net/develop/install-nix.html
 
 USER gitpod
+ENV USER gitpod
 RUN sudo mkdir -m 0755 /nix \
  && sudo chown $USER /nix \
  && curl https://nixos.org/nix/install | sh
